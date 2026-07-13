@@ -1,69 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payroll Reports</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="layout">
-
-  <nav class="sidenav">
-    <div class="sidenav-title">Payroll</div>
-
-    <button class="nav-item" id="reportToggle">
-      <span>Report</span>
-      <span class="arrow" id="reportArrow">&#9656;</span>
-    </button>
-
-    <div class="submenu" id="reportSubmenu">
-      <button class="submenu-item" data-report="station">Payroll by Station</button>
-      <button class="submenu-item" data-report="position">Payroll by Position</button>
-    </div>
-  </nav>
-
-  <main class="content">
-    <div id="emptyState" class="empty-state">
-      <p>Select a report from the left to get started.</p>
-    </div>
-
-    <section id="stationReport" class="report hidden">
-      <h1>Payroll by Station</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Station</th>
-            <th>Employees</th>
-            <th>Gross Pay</th>
-            <th>Deductions</th>
-            <th>Net Pay</th>
-          </tr>
-        </thead>
-        <tbody id="stationTableBody"></tbody>
-      </table>
-    </section>
-
-    <section id="positionReport" class="report hidden">
-      <h1>Payroll by Position</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Position</th>
-            <th>Employees</th>
-            <th>Gross Pay</th>
-            <th>Deductions</th>
-            <th>Net Pay</th>
-          </tr>
-        </thead>
-        <tbody id="positionTableBody"></tbody>
-      </table>
-    </section>
-  </main>
-
-</div>
-
-<script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piece Rate Payroll — MJM Palm Oil Mill</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
