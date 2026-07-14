@@ -131,8 +131,6 @@ export default function FfbReceptionReport() {
     '1-4 Cages',
     '>4 Cages',
     'Piece Pay (RM)',
-    'Leave Days',
-    'Leave Adj. (RM)',
     'Total Payout (RM)',
   ]
 
@@ -145,10 +143,15 @@ export default function FfbReceptionReport() {
       w.baseCages,
       w.bonusCages,
       w.piecePay.toFixed(2),
-      w.leaveDays || 0,
-      w.leaveAdjustment.toFixed(2),
       w.totalPayout.toFixed(2),
     ])
+
+  const grandTotalPayout = summary.reduce((sum, w) => sum + w.totalPayout, 0)
+
+  const summaryRowsWithTotal = () => [
+    ...summaryRows(),
+    ['Grand Total', '', '', '', '', '', '', grandTotalPayout.toFixed(2)],
+  ]
 
   const downloadSummaryPdf = () => {
     exportTablesToPdf({
@@ -156,7 +159,7 @@ export default function FfbReceptionReport() {
       title: 'FFB Reception — Piece Rate Summary',
       subtitle: ffbReceptionMonth,
       orientation: 'portrait',
-      tables: [{ columns: summaryColumns, rows: summaryRows() }],
+      tables: [{ columns: summaryColumns, rows: summaryRowsWithTotal() }],
     })
   }
 
@@ -165,7 +168,7 @@ export default function FfbReceptionReport() {
       filename: 'ffb-reception-piece-rate-summary.xlsx',
       sheetName: 'Piece Rate Summary',
       columns: summaryColumns,
-      rows: summaryRows(),
+      rows: summaryRowsWithTotal(),
     })
   }
 
@@ -233,8 +236,6 @@ export default function FfbReceptionReport() {
                 <th>1-4 Cages</th>
                 <th>&gt;4 Cages</th>
                 <th>Piece Pay</th>
-                <th>Leave Days</th>
-                <th>Leave Adj.</th>
                 <th>Total Payout</th>
               </tr>
             </thead>
@@ -248,13 +249,15 @@ export default function FfbReceptionReport() {
                   <td>{formatNumber(w.baseCages)}</td>
                   <td>{formatNumber(w.bonusCages)}</td>
                   <td>{formatRM(w.piecePay)}</td>
-                  <td className="dept-count">{w.leaveDays || '—'}</td>
-                  <td className={w.leaveAdjustment < 0 ? 'penalty' : w.leaveAdjustment > 0 ? 'incentive' : 'zero'}>
-                    {w.leaveAdjustment ? formatRM(w.leaveAdjustment, { signed: true }) : '—'}
-                  </td>
                   <td className="total">{formatRM(w.totalPayout)}</td>
                 </tr>
               ))}
+              <tr>
+                <td className="total" colSpan={7}>
+                  Grand Total
+                </td>
+                <td className="total">{formatRM(grandTotalPayout)}</td>
+              </tr>
             </tbody>
           </table>
         </div>
