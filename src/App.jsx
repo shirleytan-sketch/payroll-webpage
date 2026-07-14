@@ -3,10 +3,11 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar.jsx'
 import Topbar from './components/Topbar.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import Report from './pages/Report.jsx'
+import StationReport from './pages/StationReport.jsx'
 import Placeholder from './pages/Placeholder.jsx'
 import { mockMill, mockPeriod } from './data/mockDashboard.js'
 import {
-  IconReport,
   IconDataEntry,
   IconMaster,
   IconWorkers,
@@ -51,16 +52,8 @@ function Shell() {
         />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route
-            path="/report"
-            element={
-              <Placeholder
-                icon={IconReport}
-                title="Report"
-                description="Drill-down reports by station, worker, and pay period will live here."
-              />
-            }
-          />
+          <Route path="/report" element={<Report />} />
+          <Route path="/report/:slug" element={<StationReport />} />
           <Route
             path="/data-entry"
             element={

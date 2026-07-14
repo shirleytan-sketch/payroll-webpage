@@ -98,6 +98,16 @@ export function IconRefresh({ size = 16 }) {
   )
 }
 
+export function IconDownload({ size = 14 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 3v13" />
+      <path d="m7 11 5 5 5-5" />
+      <path d="M4 20h16" />
+    </svg>
+  )
+}
+
 export function IconMoon({ size = 16 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
@@ -136,6 +146,110 @@ export function IconLogo({ size = 18 }) {
     <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
       <path d="M3 3v18h18" />
       <path d="M18.7 8 12 14.5 8.5 11 3.7 15.8" />
+    </svg>
+  )
+}
+
+// Station icons — one distinct mark per station on the Report page.
+
+export function IconTruck({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M3 17V6a1 1 0 0 1 1-1h9v12" />
+      <path d="M13 9h4l4 4v4h-8" />
+      <circle cx="7.5" cy="17.5" r="1.8" />
+      <circle cx="17.5" cy="17.5" r="1.8" />
+    </svg>
+  )
+}
+
+export function IconScale({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 3v18M7 21h10" />
+      <path d="M5 7h6M13 7h6" />
+      <path d="M5 7 2 13a3 3 0 0 0 6 0Z" />
+      <path d="M19 7l-3 6a3 3 0 0 0 6 0Z" />
+    </svg>
+  )
+}
+
+export function IconFlame({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 22a7 7 0 0 0 7-7c0-3-2-5-3.5-7.5C14.5 9 13 10 13 8c0-2-1-4-3-6-.5 3-3 5-3 8.5A4.5 4.5 0 0 0 9 14c-1-1-1.5-2-1.5-3.5C6 12 5 14.5 5 15a7 7 0 0 0 7 7Z" />
+    </svg>
+  )
+}
+
+export function IconSeed({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 21c-4-2-7-6-7-11a7 7 0 0 1 14 0c0 5-3 9-7 11Z" />
+      <path d="M12 10v11" />
+    </svg>
+  )
+}
+
+export function IconDroplet({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 2s7 7.5 7 12.5a7 7 0 0 1-14 0C5 9.5 12 2 12 2Z" />
+    </svg>
+  )
+}
+
+export function IconGear({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.5v3M12 18.5v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5M2.5 12h3M18.5 12h3" />
+    </svg>
+  )
+}
+
+export function IconFlask({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M9 2h6M10 2v6.5L4.5 19a1.5 1.5 0 0 0 1.3 2.3h12.4a1.5 1.5 0 0 0 1.3-2.3L14 8.5V2" />
+      <path d="M7.5 15h9" />
+    </svg>
+  )
+}
+
+export function IconLeaf({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M4 20c8 0 14-6 14-14V4h-2C8 4 4 10 4 18Z" />
+      <path d="M4 20 14 10" />
+    </svg>
+  )
+}
+
+export function IconWaves({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M2 8c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" />
+      <path d="M2 14c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" />
+      <path d="M2 20c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" />
+    </svg>
+  )
+}
+
+export function IconBale({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <rect x="3" y="5" width="18" height="14" rx="1.5" />
+      <path d="M3 5l18 14M21 5 3 19" />
+    </svg>
+  )
+}
+
+export function IconSplit({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+      <path d="M12 2a8 8 0 0 0-6 13.3L9 21l1.5-3.5L12 21l1.5-3.5L15 21l3-5.7A8 8 0 0 0 12 2Z" />
+      <path d="M12 2v6.5M9.5 8.5 12 11l2.5-2.5" />
     </svg>
   )
 }
