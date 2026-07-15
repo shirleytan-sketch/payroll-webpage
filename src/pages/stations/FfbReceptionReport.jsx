@@ -1,10 +1,17 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ffbReceptionMonth, getSummary, getStationHourlyLog } from '../../data/ffbReception.js'
 import StatTile from '../../components/StatTile.jsx'
+import Tabs from '../../components/Tabs.jsx'
 import { IconTruck, IconDownload } from '../../components/icons.jsx'
 import { formatRM, formatNumber } from '../../lib/format.js'
 import { exportTablesToPdf } from '../../lib/exportPdf.js'
 import { exportTableToExcel } from '../../lib/exportExcel.js'
+
+const TABS = [
+  { id: 'hourly-log', label: 'Hourly Cages Log' },
+  { id: 'piece-rate', label: 'Piece Rate Summary' },
+]
 
 function dayLabel(iso) {
   return String(Number(iso.slice(-2)))
@@ -110,6 +117,7 @@ function hourlyLogToPdfTable(log, heading) {
 }
 
 export default function FfbReceptionReport() {
+  const [activeTab, setActiveTab] = useState(TABS[0].id)
   const summary = useMemo(() => getSummary(), [])
   const logA = useMemo(() => getStationHourlyLog('A'), [])
   const logB = useMemo(() => getStationHourlyLog('B'), [])
@@ -189,83 +197,93 @@ export default function FfbReceptionReport() {
         />
       </div>
 
-      <div className="card">
-        <div className="card-head">
-          <h2>Hourly Cages Log</h2>
-          <div className="card-head-actions">
-            <span className="card-note">{ffbReceptionMonth} · total cages tipped per hour</span>
-            <button className="btn btn-sm" onClick={downloadHourlyLog}>
-              <IconDownload size={13} />
-              Download PDF
-            </button>
-          </div>
-        </div>
-        <h3 className="table-subhead">
-          Shift A <span className="table-subhead-note">— rotates weekly: Day (0700–1700) / Night (1700–0700)</span>
-        </h3>
-        <HourlyLogTable log={logA} />
-        <h3 className="table-subhead">
-          Shift B <span className="table-subhead-note">— opposite of Shift A each week</span>
-        </h3>
-        <HourlyLogTable log={logB} />
-      </div>
+      <Tabs tabs={TABS} active={activeTab} onChange={setActiveTab} />
 
-      <div className="card">
-        <div className="card-head">
-          <h2>Piece Rate Summary</h2>
-          <div className="card-head-actions">
-            <span className="card-note">{ffbReceptionMonth}</span>
-            <button className="btn btn-sm" onClick={downloadSummaryExcel}>
-              <IconDownload size={13} />
-              Download Excel
-            </button>
-            <button className="btn btn-sm" onClick={downloadSummaryPdf}>
-              <IconDownload size={13} />
-              Download PDF
-            </button>
+      {activeTab === 'hourly-log' && (
+        <div className="card">
+          <div className="card-head">
+            <h2>Hourly Cages Log</h2>
+            <div className="card-head-actions">
+              <span className="card-note">{ffbReceptionMonth} · total cages tipped per hour</span>
+              <button className="btn btn-sm" onClick={downloadHourlyLog}>
+                <IconDownload size={13} />
+                Download PDF
+              </button>
+            </div>
           </div>
+          <h3 className="table-subhead">
+            Shift A <span className="table-subhead-note">— rotates weekly: Day (0700–1700) / Night (1700–0700)</span>
+          </h3>
+          <HourlyLogTable log={logA} />
+          <h3 className="table-subhead">
+            Shift B <span className="table-subhead-note">— opposite of Shift A each week</span>
+          </h3>
+          <HourlyLogTable log={logB} />
         </div>
-        <div className="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Worker</th>
-                <th>Role</th>
-                <th>Shift</th>
-                <th>Total Cages</th>
-                <th>1-4 Cages</th>
-                <th>&gt;4 Cages</th>
-                <th>Piece Pay</th>
-                <th>Total Payout</th>
-              </tr>
-            </thead>
-            <tbody>
-              {summary.map((w) => (
-                <tr key={w.id}>
-                  <td className="dept-name">{w.name}</td>
-                  <td className="dept-count">{w.role}</td>
-                  <td className="dept-count">{shiftLabel(w)}</td>
-                  <td>{formatNumber(w.totalCages)}</td>
-                  <td>{formatNumber(w.baseCages)}</td>
-                  <td>{formatNumber(w.bonusCages)}</td>
-                  <td>{formatRM(w.piecePay)}</td>
-                  <td className="total">{formatRM(w.totalPayout)}</td>
+      )}
+
+      {activeTab === 'piece-rate' && (
+        <div className="card">
+          <div className="card-head">
+            <h2>Piece Rate Summary</h2>
+            <div className="card-head-actions">
+              <span className="card-note">{ffbReceptionMonth}</span>
+              <button className="btn btn-sm" onClick={downloadSummaryExcel}>
+                <IconDownload size={13} />
+                Download Excel
+              </button>
+              <button className="btn btn-sm" onClick={downloadSummaryPdf}>
+                <IconDownload size={13} />
+                Download PDF
+              </button>
+            </div>
+          </div>
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Worker</th>
+                  <th>Role</th>
+                  <th>Shift</th>
+                  <th>Total Cages</th>
+                  <th>1-4 Cages</th>
+                  <th>&gt;4 Cages</th>
+                  <th>Piece Pay</th>
+                  <th>Total Payout</th>
                 </tr>
-              ))}
-              <tr>
-                <td className="total" colSpan={7}>
-                  Grand Total
-                </td>
-                <td className="total">{formatRM(grandTotalPayout)}</td>
-              </tr>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {summary.map((w) => (
+                  <tr key={w.id}>
+                    <td className="dept-name">
+                      <Link className="worker-link" to={`/report/ffb-reception/worker/${w.id}`}>
+                        {w.name}
+                      </Link>
+                    </td>
+                    <td className="dept-count">{w.role}</td>
+                    <td className="dept-count">{shiftLabel(w)}</td>
+                    <td>{formatNumber(w.totalCages)}</td>
+                    <td>{formatNumber(w.baseCages)}</td>
+                    <td>{formatNumber(w.bonusCages)}</td>
+                    <td>{formatRM(w.piecePay)}</td>
+                    <td className="total">{formatRM(w.totalPayout)}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="total" colSpan={7}>
+                    Grand Total
+                  </td>
+                  <td className="total">{formatRM(grandTotalPayout)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="table-tip">
+            Bonus cages only pay the bonus rate when the previous hour also hit 4+ cages — otherwise they still
+            pay, just at the base rate.
+          </p>
         </div>
-        <p className="table-tip">
-          Bonus cages only pay the bonus rate when the previous hour also hit 4+ cages — otherwise they still
-          pay, just at the base rate.
-        </p>
-      </div>
+      )}
     </>
   )
 }

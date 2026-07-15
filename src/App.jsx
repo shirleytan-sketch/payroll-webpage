@@ -5,6 +5,7 @@ import Topbar from './components/Topbar.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Report from './pages/Report.jsx'
 import StationReport from './pages/StationReport.jsx'
+import FfbWorkerDetail from './pages/stations/FfbWorkerDetail.jsx'
 import Placeholder from './pages/Placeholder.jsx'
 import { mockMill, mockPeriod } from './data/mockDashboard.js'
 import {
@@ -54,6 +55,7 @@ function Shell() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/report" element={<Report />} />
           <Route path="/report/:slug" element={<StationReport />} />
+          <Route path="/report/ffb-reception/worker/:workerId" element={<FfbWorkerDetail />} />
           <Route
             path="/data-entry"
             element={
